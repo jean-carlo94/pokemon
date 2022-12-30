@@ -111,7 +111,10 @@ const PokemonName = ({ pokemon  })=>{
                                         children: "Sprites:"
                                     }),
                                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_nextui_org_react__WEBPACK_IMPORTED_MODULE_2__.Container, {
-                                        direction: "row",
+                                        css: {
+                                            display: "flex",
+                                            flexDirection: "row"
+                                        },
                                         children: [
                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_nextui_org_react__WEBPACK_IMPORTED_MODULE_2__.Image, {
                                                 src: pokemon.sprites.front_default,
@@ -157,15 +160,25 @@ const getStaticPaths = async (ctx)=>{
                     name
                 }
             })),
-        fallback: false
+        fallback: "blocking"
     };
 };
 const getStaticProps = async ({ params  })=>{
     const { name  } = params;
+    const pokemon = await (0,_utils__WEBPACK_IMPORTED_MODULE_6__/* .getPokemonInfo */ .w)(name);
+    if (!pokemon) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false
+            }
+        };
+    }
     return {
         props: {
-            pokemon: await (0,_utils__WEBPACK_IMPORTED_MODULE_6__/* .getPokemonInfo */ .w)(name)
-        }
+            pokemon
+        },
+        revalidate: 86400
     };
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PokemonName);

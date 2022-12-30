@@ -63,7 +63,7 @@ const PokemonName: NextPage<Props> = ({ pokemon }) => {
 
             <Card.Body>
               <Text size={30}>Sprites:</Text>
-              <Container direction='row'>
+              <Container css={{display: 'flex', flexDirection: 'row'}}>
                 <Image 
                   src={pokemon.sprites.front_default}
                   alt={pokemon.name}
@@ -107,17 +107,28 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
     return {
       paths: pokemonNAmes.map(name => ({
       params: {name}})),
-      fallback: false
+      fallback: 'blocking'
     }
 }
   
 export const getStaticProps: GetStaticProps = async ({params}) => {
   const { name } = params as { name: string };
+  const pokemon = await getPokemonInfo(name);
 
+  if(!pokemon){
+    return{
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    };
+  };
+  
   return {
     props: {
-      pokemon: await getPokemonInfo(name)
-    }
+      pokemon
+    },
+    revalidate: 86400,
   }
 }
 

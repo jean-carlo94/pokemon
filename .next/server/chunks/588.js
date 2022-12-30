@@ -91,7 +91,7 @@ const Layout = ({ children , title  })=>{
                     }),
                     /*#__PURE__*/ jsx_runtime_.jsx("meta", {
                         property: "og:description",
-                        content: `Pagina del prkemon ${title}`
+                        content: `Pagina del pokemon ${title}`
                     }),
                     /*#__PURE__*/ jsx_runtime_.jsx("meta", {
                         property: "og:image",

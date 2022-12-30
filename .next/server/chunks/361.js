@@ -15,12 +15,16 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_api
 _api__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 const getPokemonInfo = async (nameOrId)=>{
-    const { data  } = await _api__WEBPACK_IMPORTED_MODULE_0__/* .pokeApi.get */ .T.get(`pokemon/${nameOrId}`);
-    return {
-        id: data.id,
-        name: data.name,
-        sprites: data.sprites
-    };
+    try {
+        const { data  } = await _api__WEBPACK_IMPORTED_MODULE_0__/* .pokeApi.get */ .T.get(`pokemon/${nameOrId}`);
+        return {
+            id: data.id,
+            name: data.name,
+            sprites: data.sprites
+        };
+    } catch (error) {
+        return null;
+    }
 };
 
 __webpack_async_result__();
